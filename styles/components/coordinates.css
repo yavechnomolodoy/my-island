@@ -1,0 +1,22 @@
+.coord-notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px 20px;
+    border-radius: 10px;
+    border-left: 4px solid #2196F3;
+    box-shadow: var(--shadow);
+    z-index: 1000;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all 0.3s ease;
+    max-width: 300px;
+    word-break: break-all;
+    font-size: 0.9em;
+}
+
+.coord-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
