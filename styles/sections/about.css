@@ -1,0 +1,22 @@
+.about {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.content-box {
+    background: white;
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+    .content-box {
+        padding: 20px;
+        margin: 0 10px;
+    }
+}
