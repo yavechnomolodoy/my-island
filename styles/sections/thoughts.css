@@ -1,0 +1,42 @@
+.thoughts {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.log-container {
+    background: white;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.log-entry {
+    padding: 15px 0;
+    border-bottom: 1px solid #ecf0f1;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.log-entry:hover {
+    background-color: #f8f9fa;
+    padding-left: 15px;
+    border-radius: 5px;
+}
+
+.log-entry:last-child {
+    border-bottom: none;
+}
+
+.log-date {
+    font-weight: bold;
+    color: #3498db;
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .log-container {
+        padding: 20px;
+        margin: 0 10px;
+    }
+}
