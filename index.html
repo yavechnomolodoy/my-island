@@ -5,310 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Остров-убежище посреди океана проблем</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%);
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Уведомления */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px 20px;
-            border-radius: 10px;
-            border-left: 4px solid #4CAF50;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            opacity: 0;
-            transform: translateX(100px);
-            transition: all 0.3s ease;
-            max-width: 300px;
-            word-break: break-all;
-        }
-
-        .notification.show {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Герой-секция */
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
-            color: white;
-            overflow: hidden;
-        }
-
-        .hero-content h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .subtitle {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            opacity: 0.9;
-        }
-
-        .tagline {
-            font-size: 1.2rem;
-            opacity: 0.8;
-        }
-
-        .wave {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%23ffffff"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%23ffffff"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23ffffff"/></svg>');
-            background-size: cover;
-        }
-
-        /* Секции */
-        .section {
-            padding: 80px 0;
-        }
-
-        .section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            color: #2c3e50;
-        }
-
-        /* О проекте */
-        .about {
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        .content-box {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        /* Инструменты */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .tool-item {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .tool-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        }
-
-        .tool-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .tool-item h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #2c3e50;
-        }
-
-        /* Лог мыслей */
-        .thoughts {
-            background: rgba(255, 255, 255, 0.7);
-        }
-
-        .log-container {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .log-entry {
-            padding: 15px 0;
-            border-bottom: 1px solid #ecf0f1;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .log-entry:hover {
-            background-color: #f8f9fa;
-            padding-left: 15px;
-            border-radius: 5px;
-        }
-
-        .log-entry:last-child {
-            border-bottom: none;
-        }
-
-        .log-date {
-            font-weight: bold;
-            color: #3498db;
-            margin-right: 10px;
-        }
-
-        /* Контакты */
-        .contact {
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        .message-bottle {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .contact-info {
-            margin-top: 20px;
-        }
-
-        .contact-info a {
-            color: white;
-            text-decoration: underline;
-        }
-
-        /* Стили для копирования email */
-        .email-container {
-            position: relative;
-            display: inline-block;
-            margin: 10px 0;
-        }
-
-        .email-text {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .email-text:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .copy-icon {
-            font-size: 0.9em;
-            opacity: 0.8;
-            transition: all 0.3s ease;
-        }
-
-        .email-text:hover .copy-icon {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        .email-notification {
-            position: absolute;
-            top: -45px;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: rgba(76, 175, 80, 0.95);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            opacity: 0;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            z-index: 10;
-        }
-
-        .email-notification.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* Футер */
-        .footer {
-            background: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 30px 0;
-        }
-
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-            
-            .subtitle {
-                font-size: 1.3rem;
-            }
-            
-            .section {
-                padding: 50px 0;
-            }
-            
-            .tools-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .content-box, .message-bottle {
-                padding: 20px;
-                margin: 0 10px;
-            }
-        }
-    </style>
+    
+    <!-- Основные стили -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components/notifications.css">
+    <link rel="stylesheet" href="styles/components/coordinates.css">
+    <link rel="stylesheet" href="styles/components/email-copy.css">
+    
+    <!-- Стили секций -->
+    <link rel="stylesheet" href="styles/sections/header.css">
+    <link rel="stylesheet" href="styles/sections/about.css">
+    <link rel="stylesheet" href="styles/sections/tools.css">
+    <link rel="stylesheet" href="styles/sections/thoughts.css">
+    <link rel="stylesheet" href="styles/sections/contact.css">
+    <link rel="stylesheet" href="styles/sections/footer.css">
 </head>
 <body>
+    <!-- Уведомления -->
     <div id="notification" class="notification"></div>
+    <div id="coord-notification" class="coord-notification"></div>
     
+    <!-- Шапка -->
     <header class="hero">
         <div class="hero-content">
             <h1>Остров-убежище</h1>
@@ -318,6 +35,7 @@
         <div class="wave"></div>
     </header>
 
+    <!-- О проекте -->
     <section id="about" class="section about">
         <div class="container">
             <h2>О проекте</h2>
@@ -328,6 +46,7 @@
         </div>
     </section>
 
+    <!-- Инструменты -->
     <section id="tools" class="section tools">
         <div class="container">
             <h2>Мои инструменты выживания</h2>
@@ -356,6 +75,7 @@
         </div>
     </section>
 
+    <!-- Лог мыслей -->
     <section id="thoughts" class="section thoughts">
         <div class="container">
             <h2>Лог мыслей</h2>
@@ -376,6 +96,7 @@
         </div>
     </section>
 
+    <!-- Контакты -->
     <section id="contact" class="section contact">
         <div class="container">
             <h2>Бутылка с посланием</h2>
@@ -395,231 +116,19 @@
         </div>
     </section>
 
+    <!-- Футер -->
     <footer class="footer">
         <div class="container">
             <p>Остров-убежище &copy; 2025. Все права защищены спокойствием.</p>
         </div>
     </footer>
 
-    <script>
-        class IslandWebsite {
-            constructor() {
-                this.lastRightClickTime = 0;
-                this.doubleClickDelay = 500;
-                this.objectData = {};
-                
-                this.init();
-            }
-            
-            init() {
-                this.initCoordinateTracking();
-                this.initEmailCopy();
-                this.initSmoothScroll();
-                this.initObjectData();
-                
-                console.log('🏝️ Остров-убежище загружен!');
-            }
-            
-            initCoordinateTracking() {
-                document.addEventListener('contextmenu', (e) => {
-                    e.preventDefault();
-                    const currentTime = new Date().getTime();
-                    
-                    if (currentTime - this.lastRightClickTime < this.doubleClickDelay) {
-                        this.handleDoubleRightClick(e);
-                        this.lastRightClickTime = 0;
-                    } else {
-                        this.lastRightClickTime = currentTime;
-                    }
-                });
-            }
-            
-            initEmailCopy() {
-                const emailText = document.getElementById('email-text');
-                const emailNotification = document.getElementById('email-notification');
-                
-                if (emailText) {
-                    emailText.addEventListener('click', async () => {
-                        const email = emailText.getAttribute('data-email');
-                        
-                        try {
-                            await navigator.clipboard.writeText(email);
-                            this.showEmailNotification(emailNotification);
-                        } catch (err) {
-                            // Fallback для старых браузеров
-                            const textArea = document.createElement('textarea');
-                            textArea.value = email;
-                            document.body.appendChild(textArea);
-                            textArea.select();
-                            document.execCommand('copy');
-                            document.body.removeChild(textArea);
-                            this.showEmailNotification(emailNotification);
-                        }
-                    });
-                }
-            }
-            
-            showEmailNotification(notification) {
-                notification.classList.add('show');
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 2000);
-            }
-            
-            showNotification(message, type = 'info') {
-                const notification = document.getElementById('notification');
-                const colors = {
-                    info: '#4CAF50',
-                    error: '#f44336',
-                    warning: '#ff9800'
-                };
-                
-                notification.textContent = message;
-                notification.style.borderLeftColor = colors[type] || colors.info;
-                notification.classList.add('show');
-                
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 4000);
-            }
-            
-            handleDoubleRightClick(event) {
-                const clickX = event.clientX + window.scrollX;
-                const clickY = event.clientY + window.scrollY;
-                const targetObject = this.findObjectAtCoordinates(clickX, clickY);
-                const coordData = this.createCoordinateData(clickX, clickY, targetObject);
-                
-                this.copyToClipboard(coordData.formatted);
-                this.showNotification('Координаты скопированы!');
-            }
-            
-            findObjectAtCoordinates(x, y) {
-                const objects = document.querySelectorAll('[data-object]');
-                
-                for (const obj of objects) {
-                    const rect = obj.getBoundingClientRect();
-                    const absoluteRect = {
-                        left: rect.left + window.scrollX,
-                        top: rect.top + window.scrollY,
-                        right: rect.right + window.scrollX,
-                        bottom: rect.bottom + window.scrollY
-                    };
-                    
-                    if (x >= absoluteRect.left && x <= absoluteRect.right &&
-                        y >= absoluteRect.top && y <= absoluteRect.bottom) {
-                        return {
-                            name: obj.getAttribute('data-object'),
-                            element: obj,
-                            description: this.getObjectDescription(obj.getAttribute('data-object'))
-                        };
-                    }
-                }
-                
-                return null;
-            }
-            
-            getObjectDescription(objectName) {
-                const descriptions = {
-                    'html-tool': 'Инструмент HTML/CSS - строительные материалы для убежища',
-                    'js-tool': 'Инструмент JavaScript - магия, оживляющая остров',
-                    'git-tool': 'Инструмент Git - карта всех открытий',
-                    'python-tool': 'Инструмент Python - верный помощник в исследованиях',
-                    'first-log': 'Первая запись в логе - инициализация репозитория',
-                    'second-log': 'Вторая запись в логе - построение первой хижины',
-                    'third-log': 'Третья запись в логе - добавление системы координат',
-                    'contact-bottle': 'Бутылка с посланием - контактная информация'
-                };
-                
-                return descriptions[objectName] || `Объект: ${objectName}`;
-            }
-            
-            createCoordinateData(x, y, targetObject) {
-                const data = {
-                    coordinates: { x, y },
-                    timestamp: new Date().toISOString(),
-                    viewport: {
-                        width: window.innerWidth,
-                        height: window.innerHeight,
-                        scrollX: window.scrollX,
-                        scrollY: window.scrollY
-                    },
-                    targetObject: null
-                };
-                
-                if (targetObject) {
-                    data.targetObject = {
-                        name: targetObject.name,
-                        description: targetObject.description
-                    };
-                }
-                
-                data.formatted = this.formatCoordinateData(data);
-                return data;
-            }
-            
-            formatCoordinateData(data) {
-                let formatted = `Координаты: X=${data.coordinates.x}, Y=${data.coordinates.y}\n`;
-                formatted += `Время: ${new Date(data.timestamp).toLocaleString('ru-RU')}\n`;
-                formatted += `Размер окна: ${data.viewport.width}x${data.viewport.height}\n`;
-                formatted += `Прокрутка: X=${data.viewport.scrollX}, Y=${data.viewport.scrollY}\n`;
-                
-                if (data.targetObject) {
-                    formatted += `\n--- ОБЪЕКТ ---\n`;
-                    formatted += `Название: ${data.targetObject.name}\n`;
-                    formatted += `Описание: ${data.targetObject.description}\n`;
-                } else {
-                    formatted += `\nОбъект: фон/пустая область\n`;
-                }
-                
-                return formatted;
-            }
-            
-            async copyToClipboard(text) {
-                try {
-                    await navigator.clipboard.writeText(text);
-                    return true;
-                } catch (err) {
-                    const textArea = document.createElement('textarea');
-                    textArea.value = text;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    const success = document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    return success;
-                }
-            }
-            
-            initSmoothScroll() {
-                const links = document.querySelectorAll('a[href^="#"]');
-                
-                links.forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        
-                        const targetId = this.getAttribute('href');
-                        if (targetId === '#') return;
-                        
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            targetElement.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
-                        }
-                    });
-                });
-            }
-            
-            initObjectData() {
-                // Инициализация данных объектов
-                console.log('🗺️ Карта острова составлена');
-            }
-        }
-
-        // Инициализация при загрузке страницы
-        document.addEventListener('DOMContentLoaded', () => {
-            window.island = new IslandWebsite();
-        });
-    </script>
+    <!-- Скрипты -->
+    <script src="js/config.js"></script>
+    <script src="js/modules/Notifications.js"></script>
+    <script src="js/modules/CoordinateTracker.js"></script>
+    <script src="js/modules/EmailCopy.js"></script>
+    <script src="js/modules/SmoothScroll.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
