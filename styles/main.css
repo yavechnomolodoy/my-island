@@ -16,12 +16,17 @@
     --border-radius: 15px;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
     line-height: 1.6;
     color: #333;
     background: linear-gradient(135deg, var(--light-blue) 0%, #b2ebf2 50%, #80deea 100%);
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 .container {
@@ -40,6 +45,19 @@ body {
     text-align: center;
     margin-bottom: 3rem;
     color: var(--text-dark);
+    position: relative;
+}
+
+.section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-purple), var(--secondary-blue));
+    border-radius: 2px;
 }
 
 /* Адаптивность */
@@ -50,9 +68,50 @@ body {
     
     .section h2 {
         font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .section h2::after {
+        width: 40px;
+        bottom: -8px;
     }
     
     .container {
         padding: 0 15px;
     }
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: 40px 0;
+    }
+    
+    .section h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Утилитные классы */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Плавное появление элементов */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
