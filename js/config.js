@@ -1,18 +1,32 @@
-// Конфигурация сайта
+// Конфигурация приложения
 const CONFIG = {
-    SITE: {
-        NAME: 'Остров-убежище',
-        DESCRIPTION: 'Посреди океана проблем',
-        AUTHOR: 'yavechnomolodoy@gmail.com'
+    // Настройки уведомлений
+    notifications: {
+        duration: 4000,
+        types: {
+            success: '#4CAF50',
+            error: '#f44336',
+            info: '#2196F3',
+            warning: '#ff9800',
+            log: '#607d8b'
+        }
     },
-    FEATURES: {
-        COORDINATES_TRACKING: true,
-        EMAIL_COPY: true,
-        SMOOTH_SCROLL: true
+    
+    // Настройки email
+    email: {
+        copyNotificationDuration: 2000
     },
-    TIMING: {
-        NOTIFICATION_DURATION: 4000,
-        EMAIL_NOTIFICATION_DURATION: 2000,
-        DOUBLE_CLICK_DELAY: 500
+    
+    // Настройки анимаций
+    animations: {
+        scrollOffset: 100,
+        duration: 600
+    },
+    
+    // Информация о проекте
+    project: {
+        name: 'Остров-убежище',
+        version: '1.0.0',
+        author: 'yavechnomolodoy'
     }
 };
