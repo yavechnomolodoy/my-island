@@ -1,127 +1,11 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --primary-blue: #1a2980;
-    --secondary-blue: #26d0ce;
-    --light-blue: #e0f7fa;
-    --accent-purple: #667eea;
-    --dark-purple: #764ba2;
-    --text-dark: #2c3e50;
-    --text-light: #ffffff;
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    --border-radius: 15px;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: 'Open Sans', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background: linear-gradient(135deg, var(--light-blue) 0%, #b2ebf2 50%, #80deea 100%);
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.section {
-    padding: 80px 0;
-}
-
-.section h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 3rem;
-    color: var(--text-dark);
-    position: relative;
-}
-
-.section h2::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent-purple), var(--secondary-blue));
-    border-radius: 2px;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    .section {
-        padding: 50px 0;
-    }
-    
-    .section h2 {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-    }
-    
-    .section h2::after {
-        width: 40px;
-        bottom: -8px;
-    }
-    
-    .container {
-        padding: 0 15px;
-    }
-}
-
-@media (max-width: 480px) {
-    .section {
-        padding: 40px 0;
-    }
-    
-    .section h2 {
-        font-size: 1.8rem;
-    }
-}
-
-/* Утилитные классы */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
-
-/* Плавное появление элементов */
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 /* ===== АНИМАЦИИ ПОЯВЛЕНИЯ ===== */
 
 .tool-item,
 .content-box,
 .log-entry,
-.message-bottle {
+.message-bottle,
+.section h2,
+.footer {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.6s ease, transform 0.6s ease;
@@ -130,7 +14,9 @@ body {
 .tool-item.animate-in,
 .content-box.animate-in, 
 .log-entry.animate-in,
-.message-bottle.animate-in {
+.message-bottle.animate-in,
+.section h2.animate-in,
+.footer.animate-in {
     opacity: 1;
     transform: translateY(0);
 }
@@ -145,57 +31,6 @@ body {
 .log-entry:nth-child(1) { transition-delay: 0.1s; }
 .log-entry:nth-child(2) { transition-delay: 0.2s; }
 .log-entry:nth-child(3) { transition-delay: 0.3s; }
-
-/* Анимация для заголовков секций */
-.section h2 {
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.section h2.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Анимация волны в хедере */
-.wave {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1s ease, transform 1s ease;
-}
-
-.wave.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Анимация контента в хедере */
-.hero-content h1,
-.hero-content .subtitle,
-.hero-content .tagline {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.hero-content h1.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.2s;
-}
-
-.hero-content .subtitle.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.4s;
-}
-
-.hero-content .tagline.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.6s;
-}
 
 /* Анимация ховер-эффектов */
 .tool-item:hover {
@@ -223,18 +58,6 @@ body {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* Анимация появления футера */
-.footer {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.footer.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 /* Адаптивность для анимаций */
 @media (max-width: 768px) {
     .tool-item,
@@ -255,11 +78,5 @@ body {
     .tool-item:nth-child(n),
     .log-entry:nth-child(n) {
         transition-delay: 0s;
-    }
-    
-    .hero-content h1.animate-in,
-    .hero-content .subtitle.animate-in,
-    .hero-content .tagline.animate-in {
-        transition-delay: 0.1s;
     }
 }
