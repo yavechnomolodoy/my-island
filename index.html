@@ -4,135 +4,322 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Остров-убежище посреди океана проблем</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        /* Сбрасываем стили */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* CSS переменные */
         :root {
-            --primary-blue: #1a2980; --secondary-blue: #26d0ce; --light-blue: #e0f7fa;
-            --accent-purple: #667eea; --dark-purple: #764ba2; --text-dark: #2c3e50;
-            --text-light: #ffffff; --shadow: 0 10px 30px rgba(0, 0, 0, 0.1); --border-radius: 15px;
+            --primary-blue: #1a2980;
+            --secondary-blue: #26d0ce;
+            --light-blue: #e0f7fa;
+            --accent-purple: #667eea;
+            --dark-purple: #764ba2;
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --border-radius: 15px;
         }
-        html { scroll-behavior: smooth; }
+
+        /* Основные стили */
         body {
-            font-family: 'Open Sans', sans-serif; line-height: 1.6; color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
             background: linear-gradient(135deg, var(--light-blue) 0%, #b2ebf2 50%, #80deea 100%);
             min-height: 100vh;
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .section { padding: 80px 0; }
-        .section h2 {
-            font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center;
-            margin-bottom: 3rem; color: var(--text-dark);
+
+        html {
+            scroll-behavior: smooth;
         }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section h2 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
         /* Шапка */
         .hero {
-            position: relative; height: 100vh; display: flex; align-items: center;
-            justify-content: center; text-align: center;
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
             background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
-            color: var(--text-light); overflow: hidden;
+            color: var(--text-light);
+            overflow: hidden;
         }
+
         .hero-content h1 {
-            font-family: 'Playfair Display', serif; font-size: 4rem; margin-bottom: 1rem;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 4rem;
+            margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-        .subtitle { font-size: 1.8rem; margin-bottom: 1rem; opacity: 0.9; }
-        .tagline { font-size: 1.2rem; opacity: 0.8; }
+
+        .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
         .wave {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 100px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%23ffffff"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%23ffffff"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23ffffff"/></svg>');
             background-size: cover;
         }
+
         /* О проекте */
-        .about { background: rgba(255, 255, 255, 0.9); }
-        .content-box {
-            background: white; padding: 40px; border-radius: var(--border-radius);
-            box-shadow: var(--shadow); max-width: 800px; margin: 0 auto;
-            text-align: center; font-size: 1.1rem; line-height: 1.8;
+        .about {
+            background: rgba(255, 255, 255, 0.9);
         }
+
+        .content-box {
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
         /* Инструменты */
         .tools-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px; margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
         }
+
         .tool-item {
-            background: white; padding: 30px; border-radius: var(--border-radius);
-            text-align: center; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
         }
+
         .tool-item:hover {
-            transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
-        .tool-icon { font-size: 3rem; margin-bottom: 1rem; }
-        .tool-item h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-dark); }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
         /* Лог мыслей */
-        .thoughts { background: rgba(255, 255, 255, 0.7); }
-        .log-container {
-            background: white; padding: 30px; border-radius: var(--border-radius);
-            box-shadow: var(--shadow); max-width: 800px; margin: 0 auto;
+        .thoughts {
+            background: rgba(255, 255, 255, 0.7);
         }
+
+        .log-container {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
         .log-entry {
-            padding: 15px 0; border-bottom: 1px solid #ecf0f1; cursor: pointer;
+            padding: 15px 0;
+            border-bottom: 1px solid #ecf0f1;
+            cursor: pointer;
             transition: background-color 0.3s ease;
         }
-        .log-entry:hover { background-color: #f8f9fa; padding-left: 15px; border-radius: 5px; }
-        .log-entry:last-child { border-bottom: none; }
-        .log-date { font-weight: bold; color: #3498db; margin-right: 10px; }
+
+        .log-entry:hover {
+            background-color: #f8f9fa;
+            padding-left: 15px;
+            border-radius: 5px;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-date {
+            font-weight: bold;
+            color: #3498db;
+            margin-right: 10px;
+        }
+
         /* Контакты */
-        .contact { background: rgba(255, 255, 255, 0.9); }
+        .contact {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
         .message-bottle {
             background: linear-gradient(135deg, var(--accent-purple) 0%, var(--dark-purple) 100%);
-            color: white; padding: 40px; border-radius: var(--border-radius);
-            text-align: center; max-width: 600px; margin: 0 auto;
+            color: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
-        .contact-info { margin-top: 20px; }
-        .contact-info a { color: white; text-decoration: underline; }
-        /* Email */
-        .email-container { position: relative; display: inline-block; margin: 10px 0; }
-        .email-text {
-            background: rgba(255, 255, 255, 0.2); padding: 8px 15px; border-radius: 8px;
-            cursor: pointer; transition: all 0.3s ease; border: 1px solid transparent;
-            display: inline-flex; align-items: center; gap: 8px;
+
+        .contact-info {
+            margin-top: 20px;
         }
+
+        .contact-info a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Email */
+        .email-container {
+            position: relative;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .email-text {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .email-text:hover {
-            background: rgba(255, 255, 255, 0.3); border: 1px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             transform: translateY(-2px);
         }
-        .copy-icon { font-size: 0.9em; opacity: 0.8; transition: all 0.3s ease; }
-        .email-text:hover .copy-icon { opacity: 1; transform: scale(1.1); }
+
+        .copy-icon {
+            font-size: 0.9em;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .email-text:hover .copy-icon {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
         .email-notification {
-            position: absolute; top: -45px; left: 50%; transform: translateX(-50%) translateY(10px);
-            background: rgba(76, 175, 80, 0.95); color: white; padding: 8px 15px; border-radius: 20px;
-            font-size: 0.8em; opacity: 0; transition: all 0.3s ease; white-space: nowrap; z-index: 10;
+            position: absolute;
+            top: -45px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: rgba(76, 175, 80, 0.95);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            opacity: 0;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            z-index: 10;
         }
-        .email-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        .email-notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
         /* Футер */
-        .footer { background: #2c3e50; color: white; text-align: center; padding: 30px 0; }
-        .footer p { margin: 0; opacity: 0.8; }
-        /* Уведомления */
-        .notification {
-            position: fixed; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.95);
-            padding: 15px 20px; border-radius: 10px; border-left: 4px solid #2196F3;
-            box-shadow: var(--shadow); z-index: 1000; opacity: 0; transform: translateX(100px);
-            transition: all 0.3s ease; max-width: 300px; word-break: break-all;
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
         }
-        .notification.show { opacity: 1; transform: translateX(0); }
+
+        .footer p {
+            margin: 0;
+            opacity: 0.8;
+        }
+
         /* Адаптивность */
         @media (max-width: 768px) {
-            .section { padding: 50px 0; }
-            .section h2 { font-size: 2rem; }
-            .hero-content h1 { font-size: 2.5rem; }
-            .subtitle { font-size: 1.3rem; }
-            .tools-grid { grid-template-columns: 1fr; gap: 20px; }
-            .content-box, .message-bottle { padding: 20px; margin: 0 10px; }
-            .notification { top: 10px; right: 10px; left: 10px; max-width: none; }
+            .section {
+                padding: 50px 0;
+            }
+            
+            .section h2 {
+                font-size: 2rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .tool-item {
+                padding: 20px;
+            }
+            
+            .content-box,
+            .message-bottle {
+                padding: 20px;
+                margin: 0 10px;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Уведомление -->
-    <div id="notification" class="notification"></div>
-    
     <!-- Шапка -->
     <header class="hero">
         <div class="hero-content">
@@ -148,7 +335,6 @@
         <div class="container">
             <h2>О проекте</h2>
             <div class="content-box">
-                <!-- ВАШ ТЕКСТ - НЕ ИЗМЕНЯЛ -->
                 <p>В бескрайнем океане багов, дедлайнов и сложных задач каждый нуждается в своем убежище. Этот репозиторий — мой цифровой остров, место, где я нахожу покой, творю и навожу порядок в своих мыслях и коде.</p>
                 <p>Здесь время течет медленнее, а каждая строка кода — это шаг к гармонии.</p>
             </div>
@@ -229,21 +415,11 @@
     </footer>
 
     <script>
-        // Простой JavaScript - никаких устаревших событий
+        // Чистый JavaScript без устаревших событий
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🏝️ Остров-убежище загружен! 8 ноября 2025');
+            console.log('✅ Остров-убежище загружен! 8 ноября 2025');
             
-            // Уведомления
-            const notification = document.getElementById('notification');
-            
-            function showNotification(message) {
-                if (!notification) return;
-                notification.textContent = message;
-                notification.classList.add('show');
-                setTimeout(() => notification.classList.remove('show'), 3000);
-            }
-            
-            // Копирование email (только маленькое уведомление рядом)
+            // Копирование email
             const emailText = document.getElementById('email-text');
             const emailNotification = document.getElementById('email-notification');
             
@@ -254,11 +430,12 @@
                         await navigator.clipboard.writeText(email);
                         if (emailNotification) {
                             emailNotification.classList.add('show');
-                            setTimeout(() => emailNotification.classList.remove('show'), 2000);
+                            setTimeout(() => {
+                                emailNotification.classList.remove('show');
+                            }, 2000);
                         }
-                        // Верхнее уведомление НЕ показывается
                     } catch (err) {
-                        // Fallback
+                        // Fallback для старых браузеров
                         const textArea = document.createElement('textarea');
                         textArea.value = email;
                         document.body.appendChild(textArea);
@@ -267,9 +444,10 @@
                         document.body.removeChild(textArea);
                         if (emailNotification) {
                             emailNotification.classList.add('show');
-                            setTimeout(() => emailNotification.classList.remove('show'), 2000);
+                            setTimeout(() => {
+                                emailNotification.classList.remove('show');
+                            }, 2000);
                         }
-                        // Верхнее уведомление НЕ показывается
                     }
                 });
             }
@@ -278,25 +456,24 @@
             document.querySelectorAll('.tool-item').forEach(tool => {
                 tool.addEventListener('click', function() {
                     const toolName = this.querySelector('h3').textContent;
-                    showNotification(`Инструмент: ${toolName}`);
+                    console.log(`Выбран инструмент: ${toolName}`);
                 });
             });
             
-            // Интерактивность лога
+            // Интерактивность лога мыслей
             document.querySelectorAll('.log-entry').forEach(entry => {
                 entry.addEventListener('click', function() {
                     const date = this.querySelector('.log-date').textContent;
                     const message = this.querySelector('.log-message').textContent;
-                    showNotification(`${date}: ${message}`);
+                    console.log(`${date}: ${message}`);
                 });
             });
             
-            // Плавная прокрутка
+            // Плавная прокрутка для якорных ссылок
             document.addEventListener('click', function(e) {
-                const link = e.target.closest('a[href^="#"]');
-                if (link) {
+                if (e.target.matches('a[href^="#"]')) {
                     e.preventDefault();
-                    const targetId = link.getAttribute('href');
+                    const targetId = e.target.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
                         targetElement.scrollIntoView({
