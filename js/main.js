@@ -16,9 +16,8 @@ class IslandApp {
 
     initializeModules() {
         try {
-            // Инициализация модулей
+            // Инициализация модулей (координаты убраны)
             this.modules.notifications = new Notifications();
-            this.modules.coordinates = new CoordinateTracker();
             this.modules.emailCopy = new EmailCopy();
             this.modules.smoothScroll = new SmoothScroll();
 
@@ -37,7 +36,8 @@ class IslandApp {
         toolItems.forEach(tool => {
             tool.addEventListener('click', () => {
                 const toolName = tool.querySelector('h3').textContent;
-                this.modules.notifications.show(`Выбрано: ${toolName}`, 'info');
+                const toolDesc = tool.querySelector('p').textContent;
+                this.modules.notifications.show(`${toolName} - ${toolDesc}`, 'info');
             });
         });
 
@@ -47,9 +47,17 @@ class IslandApp {
             entry.addEventListener('click', () => {
                 const date = entry.querySelector('.log-date').textContent;
                 const message = entry.querySelector('.log-message').textContent;
-                this.modules.notifications.show(`${date}: ${message}`, 'log');
+                this.modules.notifications.show(`${date}\n${message}`, 'log');
             });
         });
+
+        // Обработчик для бутылки с посланием
+        const messageBottle = document.querySelector('.message-bottle');
+        if (messageBottle) {
+            messageBottle.addEventListener('click', () => {
+                this.modules.notifications.show('📨 Послание отправлено в океан!', 'success');
+            });
+        }
 
         // Анимация появления элементов при скролле
         this.setupScrollAnimations();
