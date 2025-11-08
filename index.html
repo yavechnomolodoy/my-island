@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Остров-убежище посреди океана проблем</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         /* Сбрасываем стили */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,7 +24,7 @@
 
         /* Основные стили */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
             color: #333;
             background: linear-gradient(135deg, var(--light-blue) 0%, #b2ebf2 50%, #80deea 100%);
@@ -45,11 +46,24 @@
         }
 
         .section h2 {
-            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             text-align: center;
             margin-bottom: 3rem;
             color: var(--text-dark);
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--secondary-blue));
+            border-radius: 2px;
         }
 
         /* Шапка */
@@ -66,7 +80,7 @@
         }
 
         .hero-content h1 {
-            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-family: 'Playfair Display', serif;
             font-size: 4rem;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -76,11 +90,13 @@
             font-size: 1.8rem;
             margin-bottom: 1rem;
             opacity: 0.9;
+            font-family: 'Playfair Display', serif;
         }
 
         .tagline {
             font-size: 1.2rem;
             opacity: 0.8;
+            font-family: 'Open Sans', sans-serif;
         }
 
         .wave {
@@ -108,6 +124,7 @@
             text-align: center;
             font-size: 1.1rem;
             line-height: 1.8;
+            font-family: 'Open Sans', sans-serif;
         }
 
         /* Инструменты */
@@ -126,6 +143,7 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            font-family: 'Open Sans', sans-serif;
         }
 
         .tool-item:hover {
@@ -142,6 +160,7 @@
             font-size: 1.5rem;
             margin-bottom: 1rem;
             color: var(--text-dark);
+            font-family: 'Playfair Display', serif;
         }
 
         /* Лог мыслей */
@@ -156,6 +175,7 @@
             box-shadow: var(--shadow);
             max-width: 800px;
             margin: 0 auto;
+            font-family: 'Open Sans', sans-serif;
         }
 
         .log-entry {
@@ -179,6 +199,11 @@
             font-weight: bold;
             color: #3498db;
             margin-right: 10px;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .log-message {
+            font-family: 'Open Sans', sans-serif;
         }
 
         /* Контакты */
@@ -195,6 +220,7 @@
             max-width: 600px;
             margin: 0 auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            font-family: 'Open Sans', sans-serif;
         }
 
         .contact-info {
@@ -204,6 +230,7 @@
         .contact-info a {
             color: white;
             text-decoration: underline;
+            font-family: 'Open Sans', sans-serif;
         }
 
         /* Email */
@@ -223,6 +250,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-family: 'Open Sans', sans-serif;
         }
 
         .email-text:hover {
@@ -256,6 +284,7 @@
             transition: all 0.3s ease;
             white-space: nowrap;
             z-index: 10;
+            font-family: 'Open Sans', sans-serif;
         }
 
         .email-notification.show {
@@ -269,12 +298,44 @@
             color: white;
             text-align: center;
             padding: 30px 0;
+            font-family: 'Open Sans', sans-serif;
         }
 
         .footer p {
             margin: 0;
             opacity: 0.8;
         }
+
+        /* Анимации появления */
+        .tool-item,
+        .content-box,
+        .log-entry,
+        .message-bottle,
+        .section h2,
+        .footer {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .tool-item.animate-in,
+        .content-box.animate-in, 
+        .log-entry.animate-in,
+        .message-bottle.animate-in,
+        .section h2.animate-in,
+        .footer.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Задержки для staggered анимации */
+        .tool-item:nth-child(1) { transition-delay: 0.1s; }
+        .tool-item:nth-child(2) { transition-delay: 0.2s; }
+        .tool-item:nth-child(3) { transition-delay: 0.3s; }
+        .tool-item:nth-child(4) { transition-delay: 0.4s; }
+
+        .log-entry:nth-child(1) { transition-delay: 0.1s; }
+        .log-entry:nth-child(2) { transition-delay: 0.2s; }
 
         /* Адаптивность */
         @media (max-width: 768px) {
@@ -315,6 +376,11 @@
             
             .container {
                 padding: 0 15px;
+            }
+
+            .section h2::after {
+                width: 40px;
+                bottom: -8px;
             }
         }
     </style>
@@ -415,10 +481,33 @@
     </footer>
 
     <script>
-        // Чистый JavaScript без устаревших событий
+        // Чистый JavaScript с анимациями
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('✅ Остров-убежище загружен! 8 ноября 2025');
+            console.log('🏝️ Остров-убежище загружен! 8 ноября 2025');
             
+            // Анимации появления при скролле
+            function setupScrollAnimations() {
+                const animatedElements = document.querySelectorAll(
+                    '.tool-item, .content-box, .log-entry, .message-bottle, .section h2, .footer'
+                );
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate-in');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '50px'
+                });
+
+                animatedElements.forEach(el => {
+                    observer.observe(el);
+                });
+            }
+
             // Копирование email
             const emailText = document.getElementById('email-text');
             const emailNotification = document.getElementById('email-notification');
@@ -483,6 +572,9 @@
                     }
                 }
             });
+
+            // Запускаем анимации
+            setupScrollAnimations();
         });
     </script>
 </body>
