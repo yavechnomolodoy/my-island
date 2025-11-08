@@ -1,125 +1,54 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Остров-убежище посреди океана проблем</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/main.css">
-</head>
-<body>
-    <!-- Уведомление действий -->
-    <div id="notification" class="notification"></div>
-    
-    <!-- Шапка -->
-    <header class="hero">
-        <div class="hero-content">
-            <h1>Остров-убежище</h1>
-            <p class="subtitle">посреди океана проблем</p>
-            <p class="tagline">Мой уголок спокойствия</p>
-        </div>
-        <div class="wave"></div>
-    </header>
+// Главный класс приложения
+class IslandApp {
+    constructor() {
+        this.modules = {};
+        this.init();
+    }
 
-    <!-- О проекте -->
-    <section id="about" class="section about">
-        <div class="container">
-            <h2>О проекте</h2>
-            <div class="content-box">
-                <p>В бескрайнем океане багов, дедлайнов и сложных задач каждый нуждается в своем убежище. Этот репозиторий — мой цифровой остров, место, где я нахожу покой, творю и навожу порядок в своих мыслях и коде.</p>
-                <p>Здесь время течет медленнее, а каждая строка кода — это шаг к гармонии.</p>
-            </div>
-        </div>
-    </section>
+    init() {
+        // Ждём полной загрузки DOM
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => this.initializeApp());
+        } else {
+            this.initializeApp();
+        }
+    }
 
-    <!-- Инструменты -->
-    <section id="tools" class="section tools">
-        <div class="container">
-            <h2>Мои инструменты выживания</h2>
-            <div class="tools-grid">
-                <div class="tool-item">
-                    <div class="tool-icon">🌐</div>
-                    <h3>HTML/CSS</h3>
-                    <p>Строительные материалы для моего убежища</p>
-                </div>
-                <div class="tool-item">
-                    <div class="tool-icon">⚡</div>
-                    <h3>JavaScript</h3>
-                    <p>Магия, оживляющая остров</p>
-                </div>
-                <div class="tool-item">
-                    <div class="tool-icon">📚</div>
-                    <h3>Git</h3>
-                    <p>Карта всех моих открытий</p>
-                </div>
-                <div class="tool-item">
-                    <div class="tool-icon">🐍</div>
-                    <h3>Python</h3>
-                    <p>Верный помощник в исследованиях</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    initializeApp() {
+        try {
+            // Инициализируем модули
+            this.modules.notifications = new Notifications();
+            this.modules.emailCopy = new EmailCopy();
+            this.modules.smoothScroll = new SmoothScroll();
 
-    <!-- Лог мыслей -->
-    <section id="thoughts" class="section thoughts">
-        <div class="container">
-            <h2>Лог мыслей</h2>
-            <div class="log-container">
-                <div class="log-entry">
-                    <span class="log-date">[2025-11-07]</span>
-                    <span class="log-message">Инициализация репозитория. Установил базовый лагерь на острове.</span>
-                </div>
-                <div class="log-entry">
-                    <span class="log-date">[2025-11-08]</span>
-                    <span class="log-message">Построил первую хижину из HTML и CSS. Вид с берега прекрасен.</span>
-                </div>
-                <div class="log-entry">
-                    <span class="log-date">[2025-11-09]</span>
-                    <span class="log-message">Создал систему уведомлений для взаимодействия с элементами острова.</span>
-                </div>
-            </div>
-        </div>
-    </section>
+            // Настраиваем интерактивность
+            this.setupInteractivity();
+            
+            console.log('🏝️ Остров-убежище загружен!');
+        } catch (error) {
+            console.error('Ошибка инициализации:', error);
+        }
+    }
 
-    <!-- Контакты -->
-    <section id="contact" class="section contact">
-        <div class="container">
-            <h2>Бутылка с посланием</h2>
-            <div class="message-bottle">
-                <p>Если вы нашли эту бутылку, значит, мы разделяем любовь к коду и уединению.</p>
-                <div class="contact-info">
-                    <div class="email-container">
-                        <div id="email-text" class="email-text" data-email="yavechnomolodoy@gmail.com">
-                            yavechnomolodoy@gmail.com
-                            <span class="copy-icon">📋</span>
-                        </div>
-                        <div id="email-notification" class="email-notification">Email скопирован!</div>
-                    </div>
-                    <p>🔗 GitHub: <a href="https://github.com/yavechnomolodoy" target="_blank">github.com/yavechnomolodoy</a></p>
-                </div>
-            </div>
-        </div>
-    </section>
+    setupInteractivity() {
+        // Обработчики для инструментов
+        document.querySelectorAll('.tool-item').forEach(tool => {
+            tool.addEventListener('click', () => {
+                const toolName = tool.querySelector('h3').textContent;
+                this.modules.notifications.show(`Инструмент: ${toolName}`, 'info');
+            });
+        });
 
-    <!-- Футер -->
-    <footer class="footer">
-        <div class="container">
-            <p>Остров-убежище &copy; 2025. Все права защищены спокойствием.</p>
-        </div>
-    </footer>
+        // Обработчики для лога мыслей
+        document.querySelectorAll('.log-entry').forEach(entry => {
+            entry.addEventListener('click', () => {
+                const date = entry.querySelector('.log-date').textContent;
+                const message = entry.querySelector('.log-message').textContent;
+                this.modules.notifications.show(`${date}: ${message}`, 'log');
+            });
+        });
+    }
+}
 
-    <!-- Скрипты -->
-    <script>
-        // Простой конфиг
-        const CONFIG = {
-            notifications: { duration: 4000 },
-            email: { copyNotificationDuration: 2000 }
-        };
-    </script>
-    <script src="js/modules/Notifications.js"></script>
-    <script src="js/modules/EmailCopy.js"></script>
-    <script src="js/modules/SmoothScroll.js"></script>
-    <script src="js/main.js"></script>
-</body>
-</html>
+// Запускаем приложение
+const islandApp = new IslandApp();
