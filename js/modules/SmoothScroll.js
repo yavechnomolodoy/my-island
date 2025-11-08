@@ -9,7 +9,6 @@ class SmoothScroll {
     }
 
     setupAnchorLinks() {
-        // Плавная прокрутка для якорных ссылок
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a[href^="#"]');
             
@@ -29,11 +28,13 @@ class SmoothScroll {
     }
 
     setupScrollAnimations() {
-        // Анимации появления элементов при скролле
         if (!('IntersectionObserver' in window)) return;
 
-        const animatedElements = document.querySelectorAll('.tool-item, .content-box, .log-entry, .message-bottle');
-        
+        // Только основные элементы для анимации при скролле
+        const animatedElements = document.querySelectorAll(
+            '.tool-item, .content-box, .log-entry, .message-bottle, .section h2, .footer'
+        );
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
