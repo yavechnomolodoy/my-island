@@ -6,7 +6,6 @@
     <title>Остров-убежище посреди океана проблем</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Вставляем весь CSS прямо в HTML чтобы избежать проблем с загрузкой */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary-blue: #1a2980; --secondary-blue: #26d0ce; --light-blue: #e0f7fa;
@@ -257,7 +256,7 @@
                             emailNotification.classList.add('show');
                             setTimeout(() => emailNotification.classList.remove('show'), 2000);
                         }
-                        showNotification('Email скопирован!');
+                        // УБРАНО: showNotification('Email скопирован!') - верхнее уведомление не появляется
                     } catch (err) {
                         // Fallback
                         const textArea = document.createElement('textarea');
@@ -270,7 +269,7 @@
                             emailNotification.classList.add('show');
                             setTimeout(() => emailNotification.classList.remove('show'), 2000);
                         }
-                        showNotification('Email скопирован!');
+                        // УБРАНО: showNotification('Email скопирован!') - верхнее уведомление не появляется
                     }
                 });
             }
