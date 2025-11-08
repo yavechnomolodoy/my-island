@@ -115,3 +115,151 @@ body {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* ===== АНИМАЦИИ ПОЯВЛЕНИЯ ===== */
+
+.tool-item,
+.content-box,
+.log-entry,
+.message-bottle {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.tool-item.animate-in,
+.content-box.animate-in, 
+.log-entry.animate-in,
+.message-bottle.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Задержки для staggered анимации инструментов */
+.tool-item:nth-child(1) { transition-delay: 0.1s; }
+.tool-item:nth-child(2) { transition-delay: 0.2s; }
+.tool-item:nth-child(3) { transition-delay: 0.3s; }
+.tool-item:nth-child(4) { transition-delay: 0.4s; }
+
+/* Задержки для лога мыслей */
+.log-entry:nth-child(1) { transition-delay: 0.1s; }
+.log-entry:nth-child(2) { transition-delay: 0.2s; }
+.log-entry:nth-child(3) { transition-delay: 0.3s; }
+
+/* Анимация для заголовков секций */
+.section h2 {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.section h2.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Анимация волны в хедере */
+.wave {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.wave.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Анимация контента в хедере */
+.hero-content h1,
+.hero-content .subtitle,
+.hero-content .tagline {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.hero-content h1.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
+}
+
+.hero-content .subtitle.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.4s;
+}
+
+.hero-content .tagline.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.6s;
+}
+
+/* Анимация ховер-эффектов */
+.tool-item:hover {
+    transform: translateY(-5px) scale(1.02);
+}
+
+.log-entry:hover {
+    transform: translateX(10px);
+}
+
+/* Плавные переходы для интерактивных элементов */
+.email-text,
+.tool-item,
+.log-entry {
+    transition: all 0.3s ease;
+}
+
+/* Анимация для бутылки с посланием */
+.message-bottle {
+    transition: all 0.5s ease;
+}
+
+.message-bottle:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Анимация появления футера */
+.footer {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.footer.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Адаптивность для анимаций */
+@media (max-width: 768px) {
+    .tool-item,
+    .content-box,
+    .log-entry,
+    .message-bottle {
+        transform: translateY(20px);
+    }
+    
+    .tool-item.animate-in,
+    .content-box.animate-in,
+    .log-entry.animate-in,
+    .message-bottle.animate-in {
+        transform: translateY(0);
+    }
+    
+    /* Уменьшаем задержки на мобильных */
+    .tool-item:nth-child(n),
+    .log-entry:nth-child(n) {
+        transition-delay: 0s;
+    }
+    
+    .hero-content h1.animate-in,
+    .hero-content .subtitle.animate-in,
+    .hero-content .tagline.animate-in {
+        transition-delay: 0.1s;
+    }
+}
