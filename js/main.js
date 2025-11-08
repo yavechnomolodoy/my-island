@@ -16,7 +16,7 @@ class IslandApp {
 
     initializeModules() {
         try {
-            // Инициализация модулей (координаты убраны)
+            // Инициализация модулей
             this.modules.notifications = new Notifications();
             this.modules.emailCopy = new EmailCopy();
             this.modules.smoothScroll = new SmoothScroll();
@@ -51,13 +51,7 @@ class IslandApp {
             });
         });
 
-        // Обработчик для бутылки с посланием
-        const messageBottle = document.querySelector('.message-bottle');
-        if (messageBottle) {
-            messageBottle.addEventListener('click', () => {
-                this.modules.notifications.show('📨 Послание отправлено в океан!', 'success');
-            });
-        }
+        // УБРАЛИ обработчик для бутылки с посланием - он больше не нужен
 
         // Анимация появления элементов при скролле
         this.setupScrollAnimations();
@@ -70,8 +64,7 @@ class IslandApp {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
+                        entry.target.classList.add('animate-in');
                         observer.unobserve(entry.target);
                     }
                 });
@@ -81,9 +74,6 @@ class IslandApp {
             });
 
             animatedElements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                 observer.observe(el);
             });
         }
