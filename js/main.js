@@ -1,4 +1,4 @@
-// Конфигурация и инициализация приложения
+// Главный класс приложения
 class IslandApp {
     constructor() {
         this.modules = {};
@@ -6,79 +6,49 @@ class IslandApp {
     }
 
     init() {
-        // Инициализация модулей с задержкой для полной загрузки DOM
+        // Ждём полной загрузки DOM
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.initializeModules());
+            document.addEventListener('DOMContentLoaded', () => this.initializeApp());
         } else {
-            this.initializeModules();
+            this.initializeApp();
         }
     }
 
-    initializeModules() {
+    initializeApp() {
         try {
-            // Инициализация модулей
+            // Инициализируем модули
             this.modules.notifications = new Notifications();
             this.modules.emailCopy = new EmailCopy();
             this.modules.smoothScroll = new SmoothScroll();
 
-            // Инициализация интерактивных элементов
-            this.setupInteractiveElements();
+            // Настраиваем интерактивность
+            this.setupInteractivity();
             
-            console.log('🏝️ Остров-убежище инициализирован успешно!');
+            console.log('🏝️ Остров-убежище загружен!');
         } catch (error) {
-            console.error('Ошибка инициализации приложения:', error);
+            console.error('Ошибка инициализации:', error);
         }
     }
 
-    setupInteractiveElements() {
+    setupInteractivity() {
         // Обработчики для инструментов
-        const toolItems = document.querySelectorAll('.tool-item');
-        toolItems.forEach(tool => {
+        document.querySelectorAll('.tool-item').forEach(tool => {
             tool.addEventListener('click', () => {
                 const toolName = tool.querySelector('h3').textContent;
-                const toolDesc = tool.querySelector('p').textContent;
-                this.modules.notifications.show(`${toolName} - ${toolDesc}`, 'info');
+                this.modules.notifications.show(`Инструмент: ${toolName}`, 'info');
             });
         });
 
         // Обработчики для лога мыслей
-        const logEntries = document.querySelectorAll('.log-entry');
-        logEntries.forEach(entry => {
+        document.querySelectorAll('.log-entry').forEach(entry => {
             entry.addEventListener('click', () => {
                 const date = entry.querySelector('.log-date').textContent;
                 const message = entry.querySelector('.log-message').textContent;
-                this.modules.notifications.show(`${date}\n${message}`, 'log');
+                this.modules.notifications.show(`${date}: ${message}`, 'log');
             });
         });
-
-        // УБРАЛИ обработчик для бутылки с посланием - он больше не нужен
-
-        // Анимация появления элементов при скролле
-        this.setupScrollAnimations();
-    }
-
-    setupScrollAnimations() {
-        const animatedElements = document.querySelectorAll('.tool-item, .content-box, .log-entry, .message-bottle');
-        
-        if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-in');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '50px'
-            });
-
-            animatedElements.forEach(el => {
-                observer.observe(el);
-            });
-        }
     }
 }
 
-// Запуск приложения
+// Запускаем приложение
 const islandApp = new IslandApp();
