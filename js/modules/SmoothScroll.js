@@ -4,10 +4,16 @@ class SmoothScroll {
     }
 
     init() {
-        // Плавная прокрутка для якорей
+        this.setupAnchorLinks();
+        this.setupScrollAnimations();
+    }
+
+    setupAnchorLinks() {
+        // Плавная прокрутка для якорных ссылок
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a[href^="#"]');
-            if (link) {
+            
+            if (link && link.getAttribute('href') !== '#') {
                 e.preventDefault();
                 const targetId = link.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
@@ -20,29 +26,28 @@ class SmoothScroll {
                 }
             }
         });
-
-        // Добавляем класс активности для навигации (если будет навигационное меню)
-        this.setupSectionObserver();
     }
 
-    setupSectionObserver() {
-        const sections = document.querySelectorAll('section[id]');
-        
-        if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('section-visible');
-                    }
-                });
-            }, {
-                threshold: 0.3,
-                rootMargin: '-50px 0px -50px 0px'
-            });
+    setupScrollAnimations() {
+        // Анимации появления элементов при скролле
+        if (!('IntersectionObserver' in window)) return;
 
-            sections.forEach(section => {
-                observer.observe(section);
+        const animatedElements = document.querySelectorAll('.tool-item, .content-box, .log-entry, .message-bottle');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target);
+                }
             });
-        }
+        }, {
+            threshold: 0.1,
+            rootMargin: '50px'
+        });
+
+        animatedElements.forEach(el => {
+            observer.observe(el);
+        });
     }
 }
