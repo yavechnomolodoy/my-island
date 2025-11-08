@@ -12,17 +12,16 @@ class EmailCopy {
         }
 
         this.setupEventListeners();
-        this.setupStyles();
     }
 
     setupEventListeners() {
-        // Обработчик клика для копирования
+        // Современный обработчик без устаревших событий
         this.emailElement.addEventListener('click', (e) => {
             e.preventDefault();
             this.copyEmail();
         });
 
-        // Обработчики для клавиатуры
+        // Для доступности
         this.emailElement.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -30,33 +29,26 @@ class EmailCopy {
             }
         });
 
-        // Делаем элемент доступным для фокуса
         this.emailElement.setAttribute('tabindex', '0');
         this.emailElement.setAttribute('role', 'button');
         this.emailElement.setAttribute('aria-label', 'Скопировать email адрес');
     }
 
-    setupStyles() {
-        // Убедимся, что уведомление скрыто изначально
-        this.emailNotification.style.transition = 'all 0.3s ease';
-        this.emailNotification.classList.remove('show');
-    }
-
-    copyEmail() {
+    async copyEmail() {
         const email = this.emailElement.getAttribute('data-email');
         
         if (!email) {
-            console.error('Email не найден в data-атрибуте');
+            console.error('Email не найден');
             return;
         }
 
-        // Используем современный Clipboard API
-        navigator.clipboard.writeText(email).then(() => {
+        try {
+            await navigator.clipboard.writeText(email);
             this.showSuccess();
-        }).catch(err => {
+        } catch (err) {
             console.error('Ошибка копирования: ', err);
             this.showFallback(email);
-        });
+        }
     }
 
     showSuccess() {
@@ -71,11 +63,7 @@ class EmailCopy {
         // Fallback для старых браузеров
         const textArea = document.createElement('textarea');
         textArea.value = email;
-        textArea.style.position = 'fixed';
-        textArea.style.left = '-999999px';
-        textArea.style.top = '-999999px';
         document.body.appendChild(textArea);
-        textArea.focus();
         textArea.select();
         
         try {
