@@ -9,6 +9,7 @@ class SmoothScroll {
     }
 
     setupAnchorLinks() {
+        // Простая плавная прокрутка без устаревших событий
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a[href^="#"]');
             
@@ -28,12 +29,8 @@ class SmoothScroll {
     }
 
     setupScrollAnimations() {
+        // Используем IntersectionObserver вместо устаревших событий
         if (!('IntersectionObserver' in window)) return;
-
-        // Только основные элементы для анимации при скролле
-        const animatedElements = document.querySelectorAll(
-            '.tool-item, .content-box, .log-entry, .message-bottle, .section h2, .footer'
-        );
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -47,7 +44,11 @@ class SmoothScroll {
             rootMargin: '50px'
         });
 
-        animatedElements.forEach(el => {
+        const elementsToAnimate = document.querySelectorAll(
+            '.tool-item, .content-box, .log-entry, .message-bottle, .section h2, .footer'
+        );
+
+        elementsToAnimate.forEach(el => {
             observer.observe(el);
         });
     }
