@@ -1,0 +1,187 @@
+PS F:\САЙТЫ\my-island-main> # ПРАВИЛЬНАЯ команда:
+PS F:\САЙТЫ\my-island-main> if (-not (Test-Path $reportsFolder)) {
+>>     New-Item -ItemType Directory -Path $reportsFolder -Force
+>> }
+
+
+    Каталог: F:\САЙТЫ\my-island-main
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----  вторник  11.11.2025     13                отчеты-для-анализа
+                               :12
+
+
+PS F:\САЙТЫ\my-island-main> $mainReport = "$reportsFolder\полная-структура-сайта.txt"
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> # Очищаем файл
+PS F:\САЙТЫ\my-island-main> if (Test-Path $mainReport) { Remove-Item $mainReport }
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> Write-Host "📁 Создаем полный отчет структуры..." -ForegroundColor Cyan
+📁 Создаем полный отчет структуры...
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> # 1. Заголовок
+PS F:\САЙТЫ\my-island-main> "=== ПОЛНАЯ СТРУКТУРА САЙТА my-island-main ===" | Out-File $mainReport
+PS F:\САЙТЫ\my-island-main> "=== Создан: $(Get-Date) ===" | Out-File $mainReport -Append
+PS F:\САЙТЫ\my-island-main> "`n" | Out-File $mainReport -Append
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> # 2. Дерево всех папок и файлов
+PS F:\САЙТЫ\my-island-main> "=== ДЕРЕВО ВСЕХ ПАПОК И ФАЙЛОВ ===" | Out-File $mainReport -Append
+PS F:\САЙТЫ\my-island-main> Get-ChildItem -Recurse | ForEach-Object {
+>>     if ($_.PSIsContainer) {
+>>         "📁 ПАПКА: $($_.FullName)" | Out-File $mainReport -Append
+>>     } else {
+>>         "📄 ФАЙЛ: $($_.FullName) | Размер: $([math]::Round($_.Length/1KB, 2)) KB" | Out-File $mainReport -Append
+>>     }
+>> }
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> # 3. Содержимое текстовых файлов
+PS F:\САЙТЫ\my-island-main> "`n`n=== СОДЕРЖИМОЕ ТЕКСТОВЫХ ФАЙЛОВ ===" | Out-File $mainReport -Append
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> $textFiles = Get-ChildItem -Recurse -File | Where-Object {
+>>     $_.Extension -match '\.(html|htm|css|js|php|txt|json|xml|md|config|yml|yaml|log|sql|gitignore|editorconfig|htaccess)$' -or
+>>     $_.Name -match '^(README|package|composer|webpack|gulpfile)'
+>> }
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> foreach ($file in $textFiles) {
+>>     "`n" + "="*60 | Out-File $mainReport -Append
+>>     "📝 ФАЙЛ: $($file.FullName)" | Out-File $mainReport -Append
+>>     "="*60 | Out-File $mainReport -Append
+>>
+>>     try {
+>>         $content = Get-Content $file.FullName -ErrorAction Stop
+>>         if ($content) {
+>>             $content | Out-File $mainReport -Append
+>>         } else {
+>>             "[ФАЙЛ ПУСТОЙ]" | Out-File $mainReport -Append
+>>         }
+>>     } catch {
+>>         "[ОШИБКА ЧТЕНИЯ: $($_.Exception.Message)]" | Out-File $mainReport -Append
+>>     }
+>> }
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> Write-Host "✅ Полный отчет создан: $mainReport" -ForegroundColor Green
+✅ Полный отчет создан: F:\САЙТЫ\my-island-main\отчеты-для-анализа\полная-структура-сайта.txt
+PS F:\САЙТЫ\my-island-main> $binaryReport = "$reportsFolder\бинарные-файлы-сайта.txt"
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> Write-Host "🖼️ Создаем отчет по бинарным файлам..." -ForegroundColor Cyan
+🖼️ Создаем отчет по бинарным файлам...
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> # Очищаем файл
+PS F:\САЙТЫ\my-island-main> if (Test-Path $binaryReport) { Remove-Item $binaryReport }
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> "=== БИНАРНЫЕ ФАЙЛЫ САЙТА ===" | Out-File $binaryReport
+PS F:\САЙТЫ\my-island-main> "=== Создан: $(Get-Date) ===" | Out-File $binaryReport -Append
+PS F:\САЙТЫ\my-island-main> "`n" | Out-File $binaryReport -Append
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> # Определяем бинарные расширения
+PS F:\САЙТЫ\my-island-main> $binaryExtensions = @('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.ico', '.svg', '.webp', '.avif',
+>>                       '.mp4', '.mp3', '.wav', '.avi', '.mov', '.mkv',
+>>                       '.pdf', '.psd', '.ai', '.eps',
+>>                       '.zip', '.rar', '.7z', '.tar', '.gz',
+>>                       '.exe', '.dll', '.msi',
+>>                       '.ttf', '.otf', '.woff', '.woff2', '.eot')
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> # Находим бинарные файлы
+PS F:\САЙТЫ\my-island-main> $binaryFiles = Get-ChildItem -Recurse -File | Where-Object {
+>>     $binaryExtensions -contains $_.Extension.ToLower()
+>> }
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> "Всего бинарных файлов: $($binaryFiles.Count)" | Out-File $binaryReport -Append
+PS F:\САЙТЫ\my-island-main> "`n" | Out-File $binaryReport -Append
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> # Группируем по типам
+PS F:\САЙТЫ\my-island-main> $groupedBinaries = $binaryFiles | Group-Object Extension | Sort-Object Count -Descending
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> foreach ($group in $groupedBinaries) {
+>>     $totalSizeMB = [math]::Round(($group.Group | Measure-Object -Property Length -Sum).Sum / 1MB, 2)
+>>     "📦 ТИП: $($group.Name)" | Out-File $binaryReport -Append
+>>     "   Количество: $($group.Count) файлов" | Out-File $binaryReport -Append
+>>     "   Общий размер: $totalSizeMB MB" | Out-File $binaryReport -Append
+>>
+>>     # Список файлов этого типа
+>>     foreach ($file in $group.Group | Sort-Object Length -Descending | Select-Object -First 10) {
+>>         $sizeKB = [math]::Round($file.Length/1KB, 2)
+>>         "   - $($file.Name) ($sizeKB KB)" | Out-File $binaryReport -Append
+>>     }
+>>     "`n" | Out-File $binaryReport -Append
+>> }
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> # Топ-10 самых больших бинарных файлов
+PS F:\САЙТЫ\my-island-main> "=== ТОП-10 САМЫХ БОЛЬШИХ БИНАРНЫХ ФАЙЛОВ ===" | Out-File $binaryReport -Append
+PS F:\САЙТЫ\my-island-main> $largestFiles = $binaryFiles | Sort-Object Length -Descending | Select-Object -First 10
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> foreach ($file in $largestFiles) {
+>>     $sizeMB = [math]::Round($file.Length/1MB, 2)
+>>     "🔴 $($file.FullName) - $sizeMB MB" | Out-File $binaryReport -Append
+>> }
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> Write-Host "✅ Отчет по бинарным файлам создан: $binaryReport" -ForegroundColor Green
+✅ Отчет по бинарным файлам создан: F:\САЙТЫ\my-island-main\отчеты-для-анализа\бинарные-файлы-сайта.txt
+PS F:\САЙТЫ\my-island-main> $statsReport = "$reportsFolder\статистика-сайта.txt"
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> Write-Host "📈 Создаем сводную статистику..." -ForegroundColor Cyan
+📈 Создаем сводную статистику...
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> "=== СТАТИСТИКА САЙТА my-island-main ===" | Out-File $statsReport
+PS F:\САЙТЫ\my-island-main> "=== Создан: $(Get-Date) ===" | Out-File $statsReport -Append
+PS F:\САЙТЫ\my-island-main> "`n" | Out-File $statsReport -Append
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> $allItems = Get-ChildItem -Recurse
+PS F:\САЙТЫ\my-island-main> $folders = ($allItems | Where-Object PSIsContainer | Measure-Object).Count
+PS F:\САЙТЫ\my-island-main> $files = ($allItems | Where-Object { -not $_.PSIsContainer } | Measure-Object).Count
+PS F:\САЙТЫ\my-island-main> $totalSizeMB = [math]::Round(($allItems | Where-Object { -not $_.PSIsContainer } | Measure-Object -Property Length -Sum).Sum / 1MB, 2)
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> "📊 ОБЩАЯ СТАТИСТИКА:" | Out-File $statsReport -Append
+PS F:\САЙТЫ\my-island-main> "   Папок: $folders" | Out-File $statsReport -Append
+PS F:\САЙТЫ\my-island-main> "   Файлов: $files" | Out-File $statsReport -Append
+PS F:\САЙТЫ\my-island-main> "   Общий размер: $totalSizeMB MB" | Out-File $statsReport -Append
+PS F:\САЙТЫ\my-island-main> "`n" | Out-File $statsReport -Append
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> Write-Host "✅ Статистика создана: $statsReport" -ForegroundColor Green
+✅ Статистика создана: F:\САЙТЫ\my-island-main\отчеты-для-анализа\статистика-сайта.txt
+PS F:\САЙТЫ\my-island-main> Write-Host " "
+
+PS F:\САЙТЫ\my-island-main> Write-Host "🎉 ВСЕ ОТЧЕТЫ СОЗДАНЫ!" -ForegroundColor Green
+🎉 ВСЕ ОТЧЕТЫ СОЗДАНЫ!
+PS F:\САЙТЫ\my-island-main> Write-Host "📁 Папка с отчетами: $reportsFolder" -ForegroundColor Yellow
+📁 Папка с отчетами: F:\САЙТЫ\my-island-main\отчеты-для-анализа
+PS F:\САЙТЫ\my-island-main> Write-Host " "
+
+PS F:\САЙТЫ\my-island-main> Write-Host "📄 Файлы для отправки:" -ForegroundColor Cyan
+📄 Файлы для отправки:
+PS F:\САЙТЫ\my-island-main> Write-Host "   1. $mainReport" -ForegroundColor White
+   1. F:\САЙТЫ\my-island-main\отчеты-для-анализа\полная-структура-сайта.txt
+PS F:\САЙТЫ\my-island-main> Write-Host "   2. $binaryReport" -ForegroundColor White
+   2. F:\САЙТЫ\my-island-main\отчеты-для-анализа\бинарные-файлы-сайта.txt
+PS F:\САЙТЫ\my-island-main> Write-Host "   3. $statsReport" -ForegroundColor White
+   3. F:\САЙТЫ\my-island-main\отчеты-для-анализа\статистика-сайта.txt
+PS F:\САЙТЫ\my-island-main> Write-Host " "
+
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> # Открываем папку с отчетами
+PS F:\САЙТЫ\my-island-main> Invoke-Item $reportsFolder
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> Write-Host "📤 Теперь отправьте мне содержимое этих 3-х файлов!" -ForegroundColor Green
+📤 Теперь отправьте мне содержимое этих 3-х файлов!
+PS F:\САЙТЫ\my-island-main> # Разделяем большой файл на части
+PS F:\САЙТЫ\my-island-main> $bigFile = "F:\САЙТЫ\my-island-main\отчеты-для-анализа\полная-структура-сайта.txt"
+PS F:\САЙТЫ\my-island-main> $outputFolder = "F:\САЙТЫ\my-island-main\отчеты-для-анализа"
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> # Вариант 1: Разделить по количеству строк (каждые 500 строк)
+PS F:\САЙТЫ\my-island-main> Get-Content $bigFile | Select-Object -First 500 | Out-File "$outputFolder\часть1-структура.txt"
+PS F:\САЙТЫ\my-island-main> Get-Content $bigFile | Select-Object -Skip 500 -First 500 | Out-File "$outputFolder\часть2-структура.txt"
+PS F:\САЙТЫ\my-island-main> Get-Content $bigFile | Select-Object -Skip 1000 -First 500 | Out-File "$outputFolder\часть3-структура.txt"
+PS F:\САЙТЫ\my-island-main> Get-Content $bigFile | Select-Object -Skip 1500 | Out-File "$outputFolder\часть4-структура.txt"
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> # Вариант 2: Разделить на 2 равные части
+PS F:\САЙТЫ\my-island-main> $totalLines = (Get-Content $bigFile).Count
+PS F:\САЙТЫ\my-island-main> $half = [math]::Ceiling($totalLines / 2)
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> Get-Content $bigFile | Select-Object -First $half | Out-File "$outputFolder\первая-половина.txt"
+PS F:\САЙТЫ\my-island-main> Get-Content $bigFile | Select-Object -Skip $half | Out-File "$outputFolder\вторая-половина.txt"
+PS F:\САЙТЫ\my-island-main>
+PS F:\САЙТЫ\my-island-main> Write-Host "✅ Файл разделен на части!" -ForegroundColor Green
+✅ Файл разделен на части!
+PS F:\САЙТЫ\my-island-main>
